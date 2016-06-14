@@ -1,7 +1,7 @@
 ---
 # tasks file for timezone
 - name: Copy timezone {{ timezone }} to /etc/localtime
-  command: rsync --itemize-changes --checksum --copy-links /usr/share/zoneinfo/{{ timezone }} /etc/localtime
+  command: warn=no rsync --itemize-changes --checksum --copy-links /usr/share/zoneinfo/{{ timezone }} /etc/localtime
   register: command_result
   when: ansible_os_family == "Debian"
   changed_when: "command_result.stdout != ''"
