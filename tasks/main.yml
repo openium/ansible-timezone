@@ -1,9 +1,11 @@
 ---
 # tasks file for timezone
+
+# TODO find the new way to do this for debian 10
 - name: Copy timezone {{ timezone }} to /etc/localtime
   command: warn=no rsync --itemize-changes --checksum --copy-links /usr/share/zoneinfo/{{ timezone }} /etc/localtime
   register: command_result
-  when: ansible_os_family == "Debian"
+  when: ansible_os_family == "Debian" and ansible_distribution_major_version|int <= 9
   changed_when: "command_result.stdout != ''"
   tags: [configuration,timezone]
 
